@@ -16,6 +16,12 @@
   margin: 20px 30px;
 }
 
+#favorited-stories,
+#my-stories {
+  list-style: none;
+  padding-left: 20px;
+}
+
 
 /* Individual stories */
 
@@ -38,8 +44,13 @@
   display: block;
 }
 
-.star {
+.star,
+.trash {
   font-size: 0.75rem;
   margin: 0 2px;
   cursor: pointer;
+}
+
+.trash:hover {
+  color: crimson;
 }

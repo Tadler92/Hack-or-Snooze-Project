@@ -25,7 +25,12 @@ class Story {
 
   getHostName() {
     // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    // console.log(this.url);
+    // console.log(new URL(this.url));
+    // console.log(new URL(this.url).hostname);
+
+    // return "hostname.com";
+    return new URL(this.url).hostname;
   }
 }
 
@@ -91,6 +96,28 @@ class StoryList {
     user.ownStories.push(story);
     return story;
 
+  }
+
+  async removeStory(user, storyId) {
+    // UNIMPLEMENTED: complete this function!
+    // console.log(user);
+    // console.log(user.loginToken);
+    const token = user.loginToken;
+    // const userStory = {
+    //   token,
+    //   story: story
+    // }
+    // console.log(userStory);
+
+    await axios({
+      url: `https://hack-or-snooze-v3.herokuapp.com/stories/${storyId}`,
+      method: 'DELETE',
+      data: { token }
+    });
+
+    this.stories = this.stories.filter(removeStory => removeStory.storyId !== storyId)
+    user.favorites = user.favorites.filter(removeStory => removeStory.storyId !== storyId)
+    user.ownStories = user.ownStories.filter(removeStory => removeStory.storyId !== storyId)
   }
 }
 

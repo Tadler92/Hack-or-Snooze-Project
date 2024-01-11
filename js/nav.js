@@ -38,7 +38,9 @@ function updateNavOnLogin() {
 
 function navSubmitStoryClick(e) {
   console.debug('navSubmitStoryClick', e);
+  hidePageComponents();
   $navSubmitStory.show();
+  $allStoriesList.show();
   $submitForm.attr('style', 'display: flex')
 }
 $navSubmitStory.on('click', navSubmitStoryClick);
@@ -50,3 +52,11 @@ function navFavsClick(e) {
   favStoriesOnPage();
 }
 $navFavs.on('click', navFavsClick);
+
+function navMyStoriesClick(e) {
+  console.debug('navMyStoriesClick', e);
+  console.log(e.target.id);
+  hidePageComponents();
+  myStoriesOnPage();
+}
+$navMyStories.on('click', navMyStoriesClick);

@@ -42,3 +42,11 @@ function navSubmitStoryClick(e) {
   $submitForm.attr('style', 'display: flex')
 }
 $navSubmitStory.on('click', navSubmitStoryClick);
+
+function navFavsClick(e) {
+  console.debug('navFavsClick', e);
+  console.log(e.target.id);
+  hidePageComponents();
+  favStoriesOnPage();
+}
+$navFavs.on('click', navFavsClick);

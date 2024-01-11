@@ -88,6 +88,7 @@ class StoryList {
     // console.log(response);
 
     const story = new Story(response.data.story);
+    user.ownStories.push(story);
     return story;
 
   }
@@ -207,4 +208,41 @@ class User {
       return null;
     }
   }
+
+
+  async addOrDeleteFav(story, addOrDelete) {
+    const token = this.loginToken;
+    if (addOrDelete === 'add') {
+      await axios({
+        url: `https://hack-or-snooze-v3.herokuapp.com/users/${this.username}/favorites/${story.storyId}`,
+        method: 'POST',
+        data: { token }
+      });
+    }
+    else {
+      await axios({
+        url: `https://hack-or-snooze-v3.herokuapp.com/users/${this.username}/favorites/${story.storyId}`,
+        method: 'DELETE',
+        data: { token }
+      });
+    }
+  }
+  async addFav(story) {
+    this.favorites.push(story);
+    console.log(this.favorites);
+    await this.addOrDeleteFav(story, 'add');
+  }
+  async deleteFav(story) {
+    this.favorites = this.favorites.filter(favStory => (favStory.storyId !== story.storyId));
+    await this.addOrDeleteFav(story, 'delete');
+  }
+  isFavorite(story) {
+    return this.favorites.some(favStory => favStory.storyId === (story.storyId))
+  }
 }
+
+// const response = await axios({
+//   url: `${BASE_URL}/login`,
+//   method: "POST",
+//   data: { user: { username, password } },
+// });

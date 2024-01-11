@@ -25,6 +25,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+        ${starFavOrUnfav(currentUser, story)}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -33,6 +34,61 @@ function generateStoryMarkup(story) {
         <small class="story-user">posted by ${story.username}</small>
       </li>
     `);
+}
+
+function starFavOrUnfav(user, story) {
+  let starType = '';
+  if (user.isFavorite(story)) {
+    starType = 'fas';
+    return `<span class="star">
+              <i class="${starType} fa-star"></i>
+            </span>`
+  }
+  else if (!user.isFavorite(story)) {
+    starType = 'far';
+    return `<span class="star">
+              <i class="${starType} fa-star"></i>
+            </span>`
+  }
+}
+
+async function toggleStarredFav(e) {
+  console.debug('toggleStarredFav');
+
+  console.log(e);
+  console.log(e.target);
+  console.log(e.target.parentElement.parentElement);
+  console.log(e.target.parentElement.parentElement.id);
+  const $target = $(e.target);
+  const storyId = e.target.parentElement.parentElement.id;
+  const story = storyList.stories.find(favStory => favStory.storyId === storyId);
+
+  if ($target.hasClass('fas')) {
+    await currentUser.deleteFav(story);
+    $target.toggleClass('fas far');
+  }
+  else {
+    await currentUser.addFav(story);
+    $target.toggleClass('fas far');
+  }
+
+}
+$storyListsAll.on('click', '.star', toggleStarredFav);
+
+function favStoriesOnPage() {
+  console.debug('favStoriesOnPage');
+
+  $favoritedStoriesList.empty();
+  if (currentUser.favorites.length === 0) {
+    $favoritedStoriesList.append('<h5>No favorites added!</h5>')
+  }
+  else {
+    for (let story of currentUser.favorites) {
+      $favoritedStoriesList.append(generateStoryMarkup(story));
+    }
+  }
+
+  $favoritedStoriesList.show()
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */

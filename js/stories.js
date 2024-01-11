@@ -33,6 +33,7 @@ function generateStoryMarkup(story, showBtn) {
         <small class="story-hostname">(${hostName})</small>
         <small class="story-author">by ${story.author}</small>
         <small class="story-user">posted by ${story.username}</small>
+        <hr>
       </li>
     `);
 }
@@ -46,18 +47,23 @@ function deleteBtn() {
 }
 
 function starFavOrUnfav(user, story) {
-  let starType = '';
-  if (user.isFavorite(story)) {
-    starType = 'fas';
-    return `<span class="star">
+  if (currentUser) {
+    let starType = '';
+    if (user.isFavorite(story)) {
+      starType = 'fas';
+      return `<span class="star">
               <i class="${starType} fa-star"></i>
             </span>`
+    }
+    else if (!user.isFavorite(story)) {
+      starType = 'far';
+      return `<span class="star">
+              <i class="${starType} fa-star"></i>
+            </span>`
+    }
   }
-  else if (!user.isFavorite(story)) {
-    starType = 'far';
-    return `<span class="star">
-              <i class="${starType} fa-star"></i>
-            </span>`
+  else {
+    return '';
   }
 }
 

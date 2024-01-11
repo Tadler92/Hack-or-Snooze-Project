@@ -2,12 +2,16 @@
 
 .stories-list {
   margin: 20px 5px;
+  /* display: flex;
+  flex-direction: column;
+  margin: 8px 18px 0; */
 }
 
 .stories-list>li {
   color: gray;
   font-size: 0.8rem;
   margin: 10px 0;
+  position: relative;
 }
 
 #stories-loading-msg {
@@ -28,8 +32,10 @@
 .story-link {
   color: black;
   font-size: 0.85rem;
-  font-weight: normal;
+  font-weight: bold;
   margin: 18px 0;
+  position: relative;
+  /* left: px; */
 }
 
 .story-link:hover {
@@ -38,10 +44,24 @@
 
 .story-author {
   margin-left: 2em;
+  color: green;
+  font-weight: bold;
+  display: block;
+  position: relative;
+  left: -4px;
+  margin-top: 5px;
+  font-size: small;
 }
 
 .story-user {
   display: block;
+  color: orange;
+  font-weight: bold;
+  position: relative;
+  left: 22px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: small;
 }
 
 .star,
@@ -53,4 +73,9 @@
 
 .trash:hover {
   color: crimson;
+}
+
+hr {
+  border: 0.01px solid lightgray;
+  opacity: 0.5;
 }
